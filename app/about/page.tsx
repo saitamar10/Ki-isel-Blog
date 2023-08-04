@@ -1,6 +1,6 @@
 'use client'
 
-import MoreAbout from '../../mdxs/about/index.mdx'
+import MoreAbout from '@/mdxs/about/index.mdx'
 
 export default function About() {
   return (

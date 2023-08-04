@@ -10,7 +10,7 @@ export default function LoadMDX({ slug }: { slug: string }) {
   const { title, date } = posts.find((post) => post.id === slug) as ContextProps
 
   const loadDynamicMDX = async () => {
-    const mdx = await import(`/mdxs/posts/${slug}.mdx`)
+    const mdx = await import(`@/mdxs/posts/${slug}.mdx`)
     setDynamicMDX(mdx.default)
   }
 

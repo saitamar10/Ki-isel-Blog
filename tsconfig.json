@@ -23,7 +23,8 @@
     "baseUrl": ".",
     "paths": {
       "@/components/*": ["components/*"],
-      "@/constants": ["constants/index.ts"]
+      "@/constants": ["constants/index.ts"],
+      "@/mdxs/*": ["mdxs/*"]
     }
   },
   "include": [
