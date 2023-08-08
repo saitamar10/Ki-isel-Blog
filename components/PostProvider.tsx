@@ -1,28 +1,26 @@
 'use client'
 
-import React, { type ProviderProps, createContext } from 'react'
+import { fetchPostList } from 'lib/fetch'
+import { type PostMetaType } from 'lib/post'
+import React, { createContext, useState, useEffect } from 'react'
 
-export type ContextProps = {
-  id: string
-  title: string
-  description: string
-  date: string
-}
-
-const initContext: ContextProps[] = [
-  {
-    id: '',
-    title: '',
-    description: '',
-    date: ''
-  }
-]
-
-export const PostContext = createContext(initContext)
+export const PostContext = createContext<PostMetaType[]>([])
 
 export default function PostProvider({
-  value,
   children
-}: ProviderProps<ContextProps[]>) {
-  return <PostContext.Provider value={value}>{children}</PostContext.Provider>
+}: {
+  children: React.ReactNode
+}) {
+  const [posts, setPosts] = useState<PostMetaType[]>([])
+
+  const fetchPosts = async () => {
+    const posts = await fetchPostList()
+    setPosts(posts)
+  }
+
+  useEffect(() => {
+    fetchPosts()
+  }, [])
+
+  return <PostContext.Provider value={posts}>{children}</PostContext.Provider>
 }

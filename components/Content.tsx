@@ -146,9 +146,9 @@ function PostsContent() {
   return (
     <ul>
       {posts.map((post) => (
-        <li key={post.id} className="mb-3 list-disc list-inside">
+        <li key={post.slug} className="mb-3 list-disc list-inside">
           <Link
-            href={`/posts/${post.id}`}
+            href={`/posts/${post.slug}`}
             className="text-sky-500"
             target="_blank"
           >
