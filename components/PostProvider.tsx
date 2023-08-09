@@ -1,8 +1,8 @@
 'use client'
 
-import { fetchPostList } from 'lib/fetch'
-import { type PostMetaType } from 'lib/post'
 import React, { createContext, useState, useEffect } from 'react'
+import { type PostMetaType } from 'lib/post'
+import { fetchPostList } from 'lib/fetch'
 
 export const PostContext = createContext<PostMetaType[]>([])
 

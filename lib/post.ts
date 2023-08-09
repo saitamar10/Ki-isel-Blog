@@ -9,7 +9,7 @@ const POST_PATH = path.join(process.cwd(), 'mdxs/posts')
  * @returns string[]
  */
 export function getPostList() {
-  return fs.readdirSync(POST_PATH)
+  return fs.readdirSync(POST_PATH).map((name) => name.replace(/\.mdx/, ''))
 }
 
 export type PostMetaType = {
@@ -28,10 +28,10 @@ export function getPostMetaList(): PostMetaType[] {
   return posts.map((post) => {
     const {
       data: { title, description, date }
-    } = matter.read(path.join(POST_PATH, post))
+    } = matter.read(path.join(POST_PATH, `${post}.mdx`))
 
     return {
-      slug: post.replace(/\.mdx/, ''),
+      slug: post,
       title,
       description,
       date
@@ -46,9 +46,12 @@ export function getPostMetaList(): PostMetaType[] {
  */
 export function getTitleAndDateBySlug(slug: string) {
   const posts = getPostMetaList()
-  const { title, date } = posts.find(
-    (post) => post.slug === slug
-  ) as PostMetaType
+  const meta = posts.find((post) => post.slug === slug)
 
+  if (!meta) {
+    return {}
+  }
+
+  const { title, date } = meta
   return { title, date }
 }
