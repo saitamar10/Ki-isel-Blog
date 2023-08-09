@@ -3,7 +3,6 @@ import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import Header from '@/components/Header'
 import BackToTop from '@/components/BackToTop'
-import PostProvider from '@/components/PostProvider'
 // import Particles from '@/components/Particles'
 
 export const metadata: Metadata = {
