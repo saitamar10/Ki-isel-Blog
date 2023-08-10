@@ -5,7 +5,7 @@ import CommandInput from './Input'
 import CommandOutput from './Output'
 import { CLEAR } from '@/constants'
 
-export default function CommandLine() {
+export default function CommandLine(props: Record<string, any>) {
   // 当前点击的cmd
   const [currentClickCmd, setCurrentClickCmd] = useState('')
   // 输出内容中的cmd点击
@@ -22,10 +22,14 @@ export default function CommandLine() {
   // 出现滚动条自动滚动到可视区域底部
   const containerRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    containerRef.current?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'end'
-    })
+    if (props.scroll) {
+      props.scroll()
+    } else {
+      containerRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end'
+      })
+    }
   }, [typedCmds])
 
   return (
