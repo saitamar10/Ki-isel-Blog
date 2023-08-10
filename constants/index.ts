@@ -1,6 +1,3 @@
-export const GREETING =
-  'Hi there👋 我是赫子子, 欢迎来到我的空间👀, 在下方👇输入命令进行交互🥳🔥'
-
 export const SPACE_NAME = 'Yucihent',
   LINKS = {
     Home: '/',

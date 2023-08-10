@@ -1,11 +1,12 @@
 import CommandLine from '@/components/CommandLine'
 import PostProvider from '@/components/PostProvider'
-import { GREETING } from '@/constants'
 
 export default function Home() {
   return (
     <>
-      <p>{GREETING}</p>
+      <p>
+        Hi there👋 我是赫子子, 欢迎来到我的空间👀, 在下方👇输入命令进行交互🥳🔥
+      </p>
       <PostProvider>
         <CommandLine />
       </PostProvider>
