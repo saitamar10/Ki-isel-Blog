@@ -18,10 +18,11 @@ module.exports = {
           css: {
             a: {
               textDecoration: 'none',
-              fontWeight: '400'
+              fontWeight: 400
             },
             blockquote: {
-              fontWeight: '300'
+              fontSize: 15,
+              fontWeight: 400
             }
           }
         }

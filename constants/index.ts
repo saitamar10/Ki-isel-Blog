@@ -47,8 +47,8 @@ export const COMMAND_CONTENT_MAP: Record<
     introduction: `我是赫子子, 前端API码农, 对CLI感兴趣, 喜欢音乐🎶数码和浩瀚宇宙🤣, 有个公众号【前端仓库】👈`,
     skills: ['javascript', 'typescript', 'vue', 'react', 'nodejs'],
     platforms: {
-      segmentfault: 'https://segmentfault.com/u/hezizi',
-      juejin: 'https://juejin.cn/user/395479915963752'
+      segmentfault: 'https://segmentfault.com/u/hezizi/answers?sort=newest',
+      juejin: 'https://juejin.cn/user/395479915963752/posts'
     }
   },
 
