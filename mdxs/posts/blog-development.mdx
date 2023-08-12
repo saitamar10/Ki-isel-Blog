@@ -24,7 +24,7 @@ date: '2023-07-09'
 
 ### 设计
 
-首页为类终端风格，`prompt`样式参考了`starship`，也参考过`ohmyzsh themes`，选用`starship`因为它更好看。
+简约为主，首页为类终端风格，`prompt`样式参考了`starship`，也参考过`ohmyzsh themes`，选用`starship`因为觉得更好看。
 
 ### 交互
 
@@ -50,10 +50,11 @@ import ThemeMode from '@/components/ThemeMode'
 
 <ThemeMode />
 
-首先将`tailwind`的`dark mode`设置为`class`，这个是将暗黑模式的切换设置为手动，而不会跟随系统。
+首先将`tailwind`的`dark mode`设置为`class`，目的是将暗黑模式的切换设置为手动，而不是跟随系统。
 
 ```js
 // tailwind.config.js
+
 module.exports = {
   darkMode: 'class'
 }
@@ -197,10 +198,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 }
 ```
 
-在`app`目录下使用`.mdx`文件`useMDXComponents`组件是必要的，
+在`app`目录下使用`.mdx`文件，`useMDXComponents`组件是必要的，
 
-<span className="text-red-500">需要注意的是</span>
-此文件命名上有一定规范只能命名为`mdx-components`，不能为其他名称，也不可为`MdxComponents`，从`@next/mdx`源码中可以看出会去应用根目录查找`mdx-components`。
+需要注意的是此文件命名上有一定规范只能命名为`mdx-components`，不能为其他名称，也不可为`MdxComponents`，从`@next/mdx`源码中可以看出会去应用根目录查找`mdx-components`。
 
 ```js
 // @next/mdx部分源码
@@ -336,4 +336,129 @@ yaml被正确解析了那么我们可以使用`gray-matter`来获取文章元数
 
 ### 文章列表
 
-因为app目录是运行在`nodejs runtime`下，可使用nodejs的`fs`模块去读取文章目录即当前项目的`mdxs/posts`，读取该目录下的所有文章放在一个list中
+由于app目录是运行在`nodejs runtime`下，基本思路是用nodejs的`fs`模块去读取文章目录即`mdxs/posts`，读取该目录下的所有文章放在一个list中。
+
+使用`fs.readdirSync`读取文章目录内容，但是这仅仅是拿到文章名称的集合。
+
+```ts
+const POST_PATH = path.join(process.cwd(), 'mdxs/posts')
+
+// 文章名称集合
+export function getPostList() {
+  return fs.readdirSync(POST_PATH).map((name) => name.replace(/\.mdx/, ''))
+}
+```
+
+文章列表中展示的是标题而不是名称，标题作为文章的元数据，通过`gray-matter`的`read`api读取文件可获取（也可以使用`fs.readFileSync`） read返回`data`和`content`的对象，
+`data`是元数据信息，`content`则是文章内容。
+
+```ts
+export function getPostMetaList() {
+  const posts = getPostList()
+
+  return posts.map((post) => {
+    const {
+      data: { title, description, date }
+    } = matter.read(path.join(POST_PATH, `${post}.mdx`))
+
+    // 使用fs.readFileSync
+    // const post = fs.readFileSync(path.join(POST_PATH, `${post}.mdx`), 'utf-8')
+    // const {
+    //   data: { title, description, date }
+    // } = matter(post)
+
+    return {
+      slug: post,
+      title,
+      description,
+      date
+    }
+  })
+}
+```
+
+上述方法中我们拿到了所有文章标题，描述信息，日期的list，根据list渲染文章列表。
+
+### 文章详情
+
+文章列表中使用`Link`跳转到详情，通过`dynamic`动态加载文章对应的`mdx`文件
+
+```tsx
+export default function LoadMDX(props: Omit<PostMetaType, 'description'>) {
+  const { slug, title, date } = props
+
+  const DynamicMDX = dynamic(() => import(`@/mdxs/posts/${slug}.mdx`), {
+    loading: () => <p>loading...</p>
+  })
+
+  return (
+    <>
+      <div className="mb-12">
+        <h1 className="mb-5 font-[600]">{title}</h1>
+        <time className="my-0">{date}</time>
+      </div>
+      <DynamicMDX />
+    </>
+  )
+}
+```
+
+<a
+  href="https://nextjs.org/docs/app/api-reference/functions/generate-static-params"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  ### generateStaticParams
+</a>
+
+> 优化列表跳转详情的速度
+
+在文章详情组件导出`generateStaticParams`方法，这个方法在构建时静态生成路由，而不是在请求时按需生成路由，一定程度上提高了访问详情页速度
+
+```ts
+export async function generateStaticParams() {
+  const posts = await fetch('https://.../posts').then((res) => res.json())
+
+  return posts.map((post) => ({
+    slug: post.slug
+  }))
+}
+```
+
+### 部署
+
+项目是部署在vercel，使用github登录后我们新建一个项目，点进去后会看到`Import Git Repository`，导入对应仓库即可，后续我们每次提交代码都会自动化部署。
+
+<Image
+  src="/images/new-project.jpg"
+  width={900}
+  height={100}
+  className="w-auto h-auto"
+  alt="new-vercel-project"
+/>
+
+有自己域名的可以在Domains中添加，然后去到你买域名的地方添加对应DNS解析即可。
+
+### 总结
+
+开发中遇到了一些坑：
+
+1. `next-themes`报错`Warning: Extra attributes from the server: class,style`，通过issues和看文档，最终找到了方案
+2. `mdx-components`组件的命名，经多次测试发现只能命名为`mdx-components`，阅读@next/mdx的源码也验证了
+3. 语法高亮，开始使用的`hljs`，mdx中的代码块写的`js`，部署到线上后发现代码并没有高亮，然后改用了`prism`正常高亮，
+   又是阅读了`react-syntax-highlighter`源码发现hljs的语言集合中并没有`js`，所以无法正确解析，只能写成`javascript`，而`prism`两者写法都支持
+4. 首页的`posts`命令是运行在客户端组件中，fs无法使用，因此获取文章的方案使用fetch请求api
+5. 使用`remark-frontmatter`解析yaml无法和`mdxRs: true`同时使用，否则解析失败。添加此配置项表示使用基于`rust`的解析器来解析`mdx`，可能是还未支持的缘故
+
+```js
+module.exports = withMDX({
+  experimental: {
+    mdxRs: true
+  }
+})
+```
+
+后续更新：
+
+1. 会新增`Weekly`周刊模块，关注前端技术的更新
+2. 文章详情页添加上一篇和下一篇，更方便的阅读文章
