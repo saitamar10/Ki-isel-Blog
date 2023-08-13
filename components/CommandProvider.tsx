@@ -1,17 +1,15 @@
 'use client'
 
 import React, { createContext, useState, useEffect } from 'react'
-import { type PostMetaType } from 'lib/post'
 import { fetchPostList } from 'lib/fetch'
+import { type ListType } from 'lib/file'
 
 type ProviderValueType = {
-  // versions: Record<string, string>
-  posts: PostMetaType[]
+  posts: ListType[]
   [key: string]: any
 }
 
 export const CommandContext = createContext<ProviderValueType>({
-  // versions: { blog: '', next: '' },
   posts: []
 })
 
@@ -23,17 +21,11 @@ export default function PostProvider({
   children: React.ReactNode
 }) {
   const [providerValue, setProviderValue] = useState<ProviderValueType>({
-    // versions: { blog: '', next: '' },
     posts: []
   })
 
   const fetch = async () => {
     const posts = await fetchPostList()
-    // const versions = await fetchVersions()
-    // const value = {
-    //   // posts
-    //   // versions
-    // }
     setProviderValue({ posts })
   }
 
