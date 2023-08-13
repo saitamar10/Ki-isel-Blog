@@ -9,9 +9,9 @@ export const SPACE_NAME = 'Yucihent',
 // PROMPT
 export const SPACE = 'yucihent.space',
   BRANCH = 'main',
-  VERSION = 'v1.0.0',
+  INIT_BLOG_VERSION = '1.0.0',
   FRAMEWORK = 'next',
-  FRAMEWORK_VERSION = '13.4.10'
+  INIT_FRAMEWORK_VERSION = '13.4.10'
 
 // CMDS
 export const HELP = 'help',
