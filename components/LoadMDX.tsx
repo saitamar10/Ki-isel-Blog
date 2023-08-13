@@ -1,9 +1,9 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { type PostMetaType } from 'lib/post'
+import { type ListType } from 'lib/file'
 
-export default function LoadMDX(props: Omit<PostMetaType, 'description'>) {
+export default function LoadMDX(props: Omit<ListType, 'description'>) {
   const { slug, title, date } = props
 
   const DynamicMDX = dynamic(() => import(`@/mdxs/posts/${slug}.mdx`), {

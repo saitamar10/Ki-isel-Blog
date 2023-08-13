@@ -1,57 +1,26 @@
-import path from 'node:path'
-import fs from 'node:fs'
-import matter from 'gray-matter'
+import { getDirPath, getMDXs, getListWithMeta } from './file'
 
-const POST_PATH = path.join(process.cwd(), 'mdxs/posts')
+const postDirPath = getDirPath('mdxs/posts')
 
-/**
- *  post list only title
- * @returns string[]
- */
+// 文章名称列表
 export function getPostList() {
-  return fs.readdirSync(POST_PATH).map((name) => name.replace(/\.mdx/, ''))
+  const postMdxs = getMDXs(postDirPath)
+  return postMdxs
 }
 
-export type PostMetaType = {
-  slug: string
-  title: string
-  description: string
-  date: string
-}
-/**
- * post list with meta
- * @returns PostMetaType[]
- */
-export function getPostMetaList(): PostMetaType[] {
+// 文章元数据列表
+export function getPostMetaList() {
   const posts = getPostList()
-
-  return posts.map((post) => {
-    const {
-      data: { title, description, date }
-    } = matter.read(path.join(POST_PATH, `${post}.mdx`))
-
-    return {
-      slug: post,
-      title,
-      description,
-      date
-    }
-  })
+  return getListWithMeta(posts, postDirPath)
 }
 
-/**
- * get post title by slug
- * @param slug string
- * @returns string
- */
+// 根据文章名称获取title， date
 export function getTitleAndDateBySlug(slug: string) {
   const posts = getPostMetaList()
   const meta = posts.find((post) => post.slug === slug)
-
   if (!meta) {
     return {}
   }
-
   const { title, date } = meta
   return { title, date }
 }
