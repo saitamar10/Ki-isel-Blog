@@ -12,7 +12,7 @@ import {
   // PROJECTS,
   type CommandsType
 } from '@/constants'
-import { PostContext } from './PostProvider'
+import { CommandContext } from './CommandProvider'
 
 export default function CommandContent(props: Record<string, any>) {
   const { cmd } = props
@@ -142,7 +142,7 @@ function AboutContent(props: Record<string, any>) {
 
 // posts cmd content
 function PostsContent() {
-  const posts = useContext(PostContext)
+  const { posts } = useContext(CommandContext)
   return (
     <ul>
       {posts.map((post) => (

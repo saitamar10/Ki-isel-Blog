@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import CommandLine from '@/components/CommandLine'
-import PostProvider from '@/components/PostProvider'
+import CommandProvider from '@/components/CommandProvider'
 
 export default function CommandLineInPost() {
   const [show, setShow] = useState(false)
@@ -23,9 +23,9 @@ export default function CommandLineInPost() {
           ref={wrapperRef}
           className="not-prose overflow-auto max-h-[500px] border px-6"
         >
-          <PostProvider>
+          <CommandProvider>
             <CommandLine scroll={scroll} />
-          </PostProvider>
+          </CommandProvider>
         </div>
       ) : (
         ''
