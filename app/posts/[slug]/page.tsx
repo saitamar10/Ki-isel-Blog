@@ -1,4 +1,4 @@
-import LoadMDX from '@/components/LoadMDX'
+import LoadMDX, { type LoadMDXPropsType } from '@/components/LoadMDX'
 import { fetchPostList } from 'lib/fetch'
 import { getTitleAndDateBySlug } from 'lib/post'
 
@@ -20,13 +20,17 @@ export async function generateStaticParams() {
   }))
 }
 
-export default function Posts({
+export default function PostDetail({
   params: { slug }
 }: {
   params: { slug: string }
 }) {
   const { title = '', date = '' } = getTitleAndDateBySlug(slug)
-  const props = { slug, title, date }
+  const props: LoadMDXPropsType = {
+    slug,
+    title,
+    date
+  }
 
   return (
     <article className="prose dark:prose-invert max-w-none pb-20">

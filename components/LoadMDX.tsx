@@ -3,10 +3,27 @@
 import dynamic from 'next/dynamic'
 import { type ListType } from 'lib/file'
 
-export default function LoadMDX(props: Omit<ListType, 'description'>) {
-  const { slug, title, date } = props
+type MDXSourceType = 'posts' | 'weekly'
+type OmitOptionType = 'description' | 'date'
 
-  const DynamicMDX = dynamic(() => import(`@/mdxs/posts/${slug}.mdx`), {
+export type LoadMDXPropsType<
+  T extends MDXSourceType = 'posts',
+  P extends OmitOptionType = 'description'
+> = Omit<ListType, P> & {
+  source?: T
+}
+
+export default function LoadMDX<
+  T extends MDXSourceType,
+  P extends OmitOptionType
+>(props: LoadMDXPropsType<T, P>) {
+  const {
+    slug,
+    title,
+    date,
+    source = 'posts'
+  } = props as ListType & { source?: T }
+  const DynamicMDX = dynamic(() => import(`../mdxs/${source}/${slug}.mdx`), {
     loading: () => <p>loading...</p>
   })
 
