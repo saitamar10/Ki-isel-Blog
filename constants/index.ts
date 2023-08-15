@@ -2,6 +2,7 @@ export const SPACE_NAME = 'Yucihent',
   LINKS = {
     Home: '/',
     Posts: '/posts',
+    Weekly: '/weekly',
     // Projects: '/projects'
     About: '/about'
   }

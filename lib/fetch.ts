@@ -8,16 +8,26 @@ const base = isNodeEnv
 // export function fetchPostList<T = ListType[]>(withMeta?: true): Promise<T>
 // export function fetchPostList<T = string[]>(withMeta?: false): Promise<T>
 
-type FetchReturnType<T> = T extends true ? ListType[] : string[]
+type FetchPostReturnType<T> = T extends true ? ListType[] : string[]
 
 /**
- * fetch posts
+ * 请求文章(元数据)列表
  * @param withMeta default true boolean
- * @returns FetchReturnType<T>
+ * @returns 文章列表 FetchPostReturnType<T>
  */
 export async function fetchPostList<T extends boolean = true>(
   withMeta: T = true as T
-): Promise<FetchReturnType<T>> {
+): Promise<FetchPostReturnType<T>> {
   const res = await fetch(`${base}/${withMeta ? 'postmetas' : 'posts'}`)
+  return res.json()
+}
+
+/**
+ * 请求weekly周刊列表
+ * @param withMeta default true boolean
+ * @returns 周刊列表
+ */
+export async function fetchWeeklyList(): Promise<ListType[]> {
+  const res = await fetch(`${base}/weekly`)
   return res.json()
 }
