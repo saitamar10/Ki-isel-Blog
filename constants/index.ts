@@ -45,11 +45,11 @@ export const COMMAND_CONTENT_MAP: Record<
   [LS]: COMMANDS,
 
   [ABOUT]: {
-    introduction: `我是赫子子, 前端API码农, 对CLI感兴趣, 喜欢音乐🎶数码和浩瀚宇宙🤣, 有个公众号【前端仓库】👈`,
+    introduction: `Ben İsmet ceber, front-end API kodlayıcısıyım, CLI ile ilgileniyorum, müzik 🎶 dijital ve geniş evren 🤣 gibi, herkese açık bir numaram var [Front-end Warehouse].👈`,
     skills: ['javascript', 'typescript', 'vue', 'react', 'nodejs'],
     platforms: {
-      segmentfault: 'https://segmentfault.com/u/hezizi/answers?sort=newest',
-      juejin: 'https://juejin.cn/user/395479915963752/posts'
+      segmentfault: 'https://ismetceber.com.tr',
+      juejin: 'https://www.r10.net/profil/123106-saitama.html'
     }
   },
 
