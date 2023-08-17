@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <p>
-        Hi there👋 我是赫子子, 欢迎来到我的空间👀, 在下方👇输入命令进行交互🥳🔥
+        Hi there👋 Siteme Hoşgeldin 👀, Yeni yazıları görmek 👇İster misin?🥳🔥
       </p>
       <CommandProvider versions={versions}>
         <CommandLine />
