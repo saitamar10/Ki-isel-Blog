@@ -6,7 +6,7 @@ import BackToTop from '@/components/BackToTop'
 // import Particles from '@/components/Particles'
 
 export const metadata: Metadata = {
-  creator: 'yucihent',
+  creator: 'saitama',
   title: 'saitamanın alanı',
   description: 'saitamanın bölgesi'
 }
