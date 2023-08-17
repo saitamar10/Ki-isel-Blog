@@ -5,7 +5,7 @@ export default async function Weekly() {
   const weekly = await fetchWeeklyList().catch(() => [])
 
   return (
-    <h2>整理中...🔥</h2>
+    <h2>Yapımda...🔥</h2>
     // <ul>
     //   {weekly.map(({ slug, title }, index: number) => (
     //     <li
