@@ -1,4 +1,4 @@
-export const SPACE_NAME = 'Yucihent',
+export const SPACE_NAME = 'Saitama',
   LINKS = {
     Home: '/',
     Posts: '/posts',
