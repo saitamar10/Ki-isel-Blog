@@ -7,8 +7,8 @@ import BackToTop from '@/components/BackToTop'
 
 export const metadata: Metadata = {
   creator: 'yucihent',
-  title: '赫子子空间',
-  description: '赫子子的博客'
+  title: 'saitamanın alanı',
+  description: 'saitamanın bölgesi'
 }
 
 const NoSSRThemeProvider = dynamic(() => import('@/components/ThemeProvider'), {
